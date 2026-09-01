@@ -31,3 +31,27 @@
 #       exporters: [otlp_http/prometheus, debug, otlp_grpc/mybackend]           # repeat upstream exporters
 #     logs:
 #       exporters: [opensearch, debug, otlp_grpc/mybackend]                     # repeat upstream exporters
+#
+# This intentionally drops the upstream Jaeger/Prometheus/OpenSearch exporters so all
+# data goes only to Trace0. The span_metrics connector must stay on traces/metrics or
+# the collector crashes.
+
+# Trace0 backend. OTEL_EXPORTER_OTLP_ENDPOINT and TRACE0_API_KEY are set on
+# the otel-collector container in compose.extras.yaml (the API key comes
+# from TRACE0_API_KEY in .env.override).
+exporters:
+  otlphttp/trace0:
+    endpoint: ${env:OTEL_EXPORTER_OTLP_ENDPOINT}
+    headers:
+      X-API-KEY: ${env:TRACE0_API_KEY}
+    sending_queue:
+      batch:
+
+service:
+  pipelines:
+    traces:
+      exporters: [debug, span_metrics, otlphttp/trace0]
+    metrics:
+      exporters: [debug, otlphttp/trace0]
+    logs:
+      exporters: [debug, otlphttp/trace0]

@@ -13,6 +13,18 @@
 [![OpenSSF Scorecard for opentelemetry-demo](https://api.scorecard.dev/projects/github.com/open-telemetry/opentelemetry-demo/badge)](https://scorecard.dev/viewer/?uri=github.com/open-telemetry/opentelemetry-demo)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9247/badge)](https://www.bestpractices.dev/en/projects/9247)
 
+## Trace0
+
+This is Trace0's fork of the OpenTelemetry Demo.
+
+To run this application with Trace0, follow these steps:
+
+1. Replace `YOUR_TRACE0_ENV_API_KEY` with your Trace0 API key in [.env.override](.env.override). You can find your API key by clicking **Environment Settings** in the [Trace0 dashboard](https://app.trace0hq.com/).
+
+2. From the repository root, run: `make start-no-o11y`.
+
+The application will start, and all telemetry data will be exported to your Trace0 account.
+
 ## Welcome to the OpenTelemetry Astronomy Shop Demo
 
 This repository contains the OpenTelemetry Astronomy Shop, a microservice-based
