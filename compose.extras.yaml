@@ -10,17 +10,11 @@
 # Usage:
 #   docker compose -f compose.yaml -f compose.full.yaml -f compose.observability.yaml -f compose.extras.yaml up
 #
-# Example: add a service and patch the otel-collector to export to it:
-#
-# services:
-#   my-backend:
-#     image: myvendor/backend:latest
-#     ports:
-#       - "4317"
-#
-#   otel-collector:
-#     depends_on:
-#       my-backend:
-#         condition: service_started
-#
-# Then add your exporter config to src/otel-collector/otelcol-config-extras.yml.
+# Trace0 backend: pass the endpoint and API key into the otel-collector
+# container's environment so otelcol-config-extras.yml can read them via
+# ${env:...}. Set TRACE0_API_KEY in .env.override.
+services:
+  otel-collector:
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=https://app.trace0hq.com/api
+      - TRACE0_API_KEY
