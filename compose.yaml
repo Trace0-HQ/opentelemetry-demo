@@ -460,6 +460,7 @@ services:
   payment:
     image: ${IMAGE_NAME}:${DEMO_VERSION}-payment
     container_name: payment
+    pull_policy: build
     build:
       context: ./
       dockerfile: ${PAYMENT_DOCKERFILE}
@@ -477,7 +478,7 @@ services:
       - PAYMENT_PORT
       - FLAGD_HOST
       - FLAGD_PORT
-      - NODE_OPTIONS=--require @opentelemetry/auto-instrumentations-node/register
+      - NODE_OPTIONS=--require ./otel-setup.js
       - OTEL_EXPORTER_OTLP_ENDPOINT
       - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
